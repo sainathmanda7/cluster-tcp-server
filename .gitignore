@@ -1,0 +1,12 @@
+# Binaries
+bin/
+go-tcp
+
+# OS files
+.DS_Store
+
+# Go installers (the ones in your screenshot)
+*.tar.gz
+
+# Environment files
+.env
