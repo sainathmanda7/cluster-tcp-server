@@ -25,9 +25,62 @@ To run this project locally, you need the following installed:
 * [Nginx](https://nginx.org/)
 * `nc` (Netcat) for testing client connections
 
-## 🚀 How to Run
+🚀 Getting Started
+**1. Start Nginx (TCP Load Balancer)**
 
-**1. Start the external services:**
-Ensure Redis is running in the background:
-```bash
-sudo service redis-server start
+Run Nginx using the custom configuration file provided in the project root:
+
+sudo nginx -c $(pwd)/nginx.conf
+
+**2. Start the Go Server Cluster**
+If you want to access Go servers individually 
+# Terminal 1
+go run ./cmd/server-1/main1.go -port=9000
+
+# Terminal 2
+go run ./cmd/server-2/main2.go -port=9001
+
+# Terminal 3
+go run ./cmd/server-3/main3.go -port=9002
+
+**3. Connect Clients
+**
+Open new terminal windows for each user (e.g., Alice, Bob) and connect through the Nginx load balancer:
+
+**nc localhost 8000
+**
+Once connected, the server will greet you and assign a unique Network ID, for example:
+
+127.0.0.1:54321
+💬 Message Protocol
+
+To send messages between users, use the custom TCP protocol format below:
+
+Format
+TARGET_ID|SERVER_NO|FD|YOUR_MESSAGE
+Example
+
+If Bob’s ID is:
+
+127.0.0.1:48760
+
+Alice can send him a message like this:
+
+127.0.0.1:48760|1|0|Hello from across the cluster!
+
+## 📂 Project Structure
+go-tcp/
+├── cmd/
+│   ├── server-1/
+│   │   └── main1.go        # Node 1 entrypoint
+│   ├── server-2/
+│   │   └── main2.go        # Node 2 entrypoint
+│   └── server-3/
+│       └── main3.go        # Node 3 entrypoint
+│
+├── protocol/
+│   └── protocol.go         # TCP packet encoder/decoder
+│
+├── nginx.conf              # Layer 4 TCP load balancer config
+├── go.mod
+└── go.sum
