@@ -1,5 +1,5 @@
 # Distributed TCP Chat Engine
-
+<img width="1672" height="941" alt="High-Concurrency TCP Server Monitoring Dashboard" src="https://github.com/user-attachments/assets/6803df0d-31fb-484f-b808-168e35edd06f" />
 
 A high-performance, scalable, and distributed TCP chat infrastructure built with **Go**, **Redis**, and **Nginx**.
 
